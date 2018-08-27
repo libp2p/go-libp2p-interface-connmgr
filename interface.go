@@ -39,8 +39,8 @@ type TagInfo struct {
 	Value     int
 
 	// Tags maps tag ids to the numerical values.
-	Tags      map[string]int
+	Tags map[string]int
 
 	// Conns maps connection ids (such as remote multiaddr) to their creation time.
-	Conns     map[string]time.Time
+	Conns map[string]time.Time
 }
