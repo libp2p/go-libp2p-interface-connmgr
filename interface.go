@@ -5,20 +5,42 @@ import (
 	"time"
 
 	inet "github.com/libp2p/go-libp2p-net"
-	peer "github.com/libp2p/go-libp2p-peer"
+	"github.com/libp2p/go-libp2p-peer"
 )
 
+// ConnManager tracks connections to peers, and allows consumers to associate metadata
+// with each peer.
+//
+// It enables connections to be trimmed based on implementation-defined heuristics.
 type ConnManager interface {
+
+	// TagPeer sets a tag value for the given peer.
+	// A tag can be a distance, latency, reputation, etc. value.
 	TagPeer(peer.ID, string, int)
-	UntagPeer(peer.ID, string)
-	GetTagInfo(peer.ID) *TagInfo
-	TrimOpenConns(context.Context)
+
+	// Untag removes the tagged value from the peer.
+	UntagPeer(p peer.ID, tag string)
+
+	// GetTagInfo returns the metadata associated with the peer,
+	// or nil if no metadata has been recorded for the peer.
+	GetTagInfo(p peer.ID) *TagInfo
+
+	// Terminates open connections based on an implementation-defined heuristic.
+	TrimOpenConns(ctx context.Context)
+
+	// Notifee returns an implementation that can be called back to inform of
+	// opened and closed connections.
 	Notifee() inet.Notifiee
 }
 
+// TagInfo stores metadata associated with a peer.
 type TagInfo struct {
 	FirstSeen time.Time
 	Value     int
+
+	// Tags maps tag ids to the numerical values.
 	Tags      map[string]int
+
+	// Conns maps connection ids (such as remote multiaddr) to their creation time.
 	Conns     map[string]time.Time
 }
