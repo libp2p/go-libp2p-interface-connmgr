@@ -14,8 +14,7 @@ import (
 // It enables connections to be trimmed based on implementation-defined heuristics.
 type ConnManager interface {
 
-	// TagPeer sets a tag value for the given peer.
-	// A tag can be a distance, latency, reputation, etc. value.
+	// TagPeer tags a peer with a string, associating a weight with the tag.
 	TagPeer(peer.ID, string, int)
 
 	// Untag removes the tagged value from the peer.
@@ -25,7 +24,8 @@ type ConnManager interface {
 	// or nil if no metadata has been recorded for the peer.
 	GetTagInfo(p peer.ID) *TagInfo
 
-	// Terminates open connections based on an implementation-defined heuristic.
+	// TrimOpenConns terminates open connections based on an implementation-defined
+	// heuristic.
 	TrimOpenConns(ctx context.Context)
 
 	// Notifee returns an implementation that can be called back to inform of
