@@ -31,6 +31,12 @@ type ConnManager interface {
 	// Notifee returns an implementation that can be called back to inform of
 	// opened and closed connections.
 	Notifee() inet.Notifiee
+
+	// Protect protects a peer from having its connection(s) pruned.
+	Protect(peer.ID)
+
+	// Unprotect removes any protection that may have been placed on a peer.
+	Unprotect(peer.ID)
 }
 
 // TagInfo stores metadata associated with a peer.
