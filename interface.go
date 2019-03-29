@@ -34,8 +34,10 @@ type ConnManager interface {
 
 	// Protect protects a peer from having its connection(s) pruned.
 	//
-	// Calls to Protect() with the same tag are idempotent. They are not refcounted, so after multiple Protect()
-	// calls with the same tag, a single Unprotect() call bearing the same tag will revoke the protection.
+	// Tagging allows different parts of the system to manage protections without interfering with one another.
+	//
+	// Calls to Protect() with the same tag are idempotent. They are not refcounted, so after multiple calls
+	// to Protect() with the same tag, a single Unprotect() call bearing the same tag will revoke the protection.
 	Protect(id peer.ID, tag string)
 
 	// Unprotect removes a protection that may have been placed on a peer, under the specified tag.
