@@ -5,7 +5,7 @@ import (
 	"time"
 
 	inet "github.com/libp2p/go-libp2p-net"
-	"github.com/libp2p/go-libp2p-peer"
+	peer "github.com/libp2p/go-libp2p-peer"
 )
 
 // ConnManager tracks connections to peers, and allows consumers to associate metadata
@@ -33,10 +33,16 @@ type ConnManager interface {
 	Notifee() inet.Notifiee
 
 	// Protect protects a peer from having its connection(s) pruned.
-	Protect(peer.ID)
+	//
+	// Calls to Protect() with the same tag are idempotent. They are not refcounted, so after multiple Protect()
+	// calls with the same tag, a single Unprotect() call bearing the same tag will revoke the protection.
+	Protect(id peer.ID, tag string)
 
-	// Unprotect removes any protection that may have been placed on a peer.
-	Unprotect(peer.ID)
+	// Unprotect removes a protection that may have been placed on a peer, under the specified tag.
+	//
+	// The return value indicates whether the peer continues to be protected after this call, by way of a different tag.
+	// See notes on Protect() for more info.
+	Unprotect(id peer.ID, tag string) (protected bool)
 }
 
 // TagInfo stores metadata associated with a peer.
