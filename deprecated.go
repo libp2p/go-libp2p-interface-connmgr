@@ -1,12 +1,12 @@
 package ifconnmgr
 
-import moved "github.com/libp2p/go-libp2p-core/connmgr"
+import core "github.com/libp2p/go-libp2p-core/connmgr"
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/connmgr.ConnManager instead.
-type ConnManager = moved.ConnManager
+type ConnManager = core.ConnManager
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/connmgr.TagInfo instead.
-type TagInfo = moved.TagInfo
+type TagInfo = core.TagInfo
 
 // Deprecated: use github.com/libp2p/go-libp2p-core/connmgr.NullConnMgr instead.
-type NullConnMgr = moved.NullConnMgr
+type NullConnMgr = core.NullConnMgr
