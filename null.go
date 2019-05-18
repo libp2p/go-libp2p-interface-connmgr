@@ -20,6 +20,7 @@ func (_ NullConnMgr) TrimOpenConns(context.Context)            {}
 func (_ NullConnMgr) Notifee() inet.Notifiee                   { return &cmNotifee{} }
 func (_ NullConnMgr) Protect(peer.ID, string)                  {}
 func (_ NullConnMgr) Unprotect(peer.ID, string) bool           { return false }
+func (_ NullConnMgr) Close() error                             { return nil }
 
 type cmNotifee struct{}
 
