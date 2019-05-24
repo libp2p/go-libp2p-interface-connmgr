@@ -1,3 +1,4 @@
+// Deprecated: use github.com/libp2p/go-libp2p-core/connmgr instead.
 package ifconnmgr
 
 import core "github.com/libp2p/go-libp2p-core/connmgr"
